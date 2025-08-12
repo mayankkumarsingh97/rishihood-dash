@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import TableShimmer from "@/shared/shimmer/TableShimmer";
 import StudentTable from "@/component/StudentTable";
 import Pagination from "@/shared/pagination/Pagination";
 import Header from "@/component/header/Header";
@@ -11,14 +10,13 @@ export default function DashboardPage() {
   const [error, setError] = useState("");
   const [students, setStudents] = useState<any>([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [all, setAll] = useState("true");
-
+  const [pagination, setPagination] = useState<any>();
   // Filters
   const [department, setDepartment] = useState("");
   const [active, setActive] = useState("active");
-
-  const limit = 100;
+  const limit = 10;
+  //
+  // Function to fetch students based on filters and pagination
   const getStudents = async () => {
     setLoading(true);
     try {
@@ -27,11 +25,10 @@ export default function DashboardPage() {
         limit,
         department: department || "",
         active: active,
-        all: "true", // Assuming you want to fetch all students regardless of department or status
       });
 
       setStudents(data.data.data);
-      setTotalPages(Math.ceil(data.total / limit));
+      setPagination(data.data);
     } catch (err) {
       console.error("Failed to fetch students:", err);
       setError("Failed to fetch data");
@@ -63,7 +60,7 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <main className="bg-[#c8ecff] p-2 md:p-10">
-        <h1 className="text-3xl font-semibold mb-6">Welcome, Mayank</h1>
+        <h1 className="text-3xl font-semibold mb-6">Welcome, Mayank Kumar</h1>
 
         <Header
           onDepartmentChange={(value) => setDepartment(value)}
@@ -71,22 +68,25 @@ export default function DashboardPage() {
         />
 
         {/* Student Data Table */}
-        <div className="bg-white rounded shadow p-6 mb-2 md:min-h-[600px] max-h-[600px] overflow-y-scroll">
-          {loading ? (
-            <TableShimmer />
-          ) : error ? (
+        <div className="bg-white rounded shadow p-6 mb-2 md:min-h-[500px] max-h-[500px]">
+          {loading ? null : error ? (
             <p className="text-red-500">{error}</p>
           ) : (
-            <StudentTable studentList={students} />
+            <StudentTable studentList={students} page={page} limit={limit} />
           )}
         </div>
 
         <div className="bg-white rounded shadow p-2">
-          {students && (
+          {students && pagination && (
             <Pagination
-              data={students}
-              onPageChange={() => {}}
-              itemsPerPage={limit}
+              first={pagination.first}
+              prev={pagination.prev}
+              next={pagination.next}
+              last={pagination.last}
+              pages={pagination.pages}
+              items={pagination.items}
+              currentPage={page}
+              onPageChange={(p: number) => setPage(p)}
             />
           )}
         </div>

@@ -5,7 +5,7 @@ interface FetchStudentsParams {
   order?: "asc" | "desc";
   department?: string;
   active?: string; // "true" | "false"
-  all:string
+  all?:string
 }
 
 export const fetchStudents = async ({
@@ -22,7 +22,7 @@ export const fetchStudents = async ({
     if (sortBy) query += `&_sort=${sortBy}&_order=${order || "asc"}`;
     if (department) query += `&department=${encodeURIComponent(department)}`;
     if (active) query += `&active=${active}`;
-    if (all) query += `&all=${all}`;
+    if (all) query += `http://localhost:4000/students`;
 
     const res = await fetch(`http://localhost:4000/students?${query}`);
 

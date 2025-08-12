@@ -13,9 +13,11 @@ interface Student {
 
 interface StudentTableProps {
   studentList?: Student[];
+  page: number;
+  limit: number;
 }
 
-const StudentTable = ({ studentList = [] }: StudentTableProps) => {
+const StudentTable = ({ page, limit, studentList = [] }: StudentTableProps) => {
   return (
     <div className="overflow-x-auto font-roboto">
       <table className="min-w-full bg-white shadow rounded-lg">
@@ -36,7 +38,7 @@ const StudentTable = ({ studentList = [] }: StudentTableProps) => {
               className="odd:bg-gray-50 even:bg-white hover:bg-gray-100 transition-colors"
             >
               <td className="px-4 py-2 text-[14px] text-[#767676] ">
-                {index + 1}
+                {(page - 1) * limit + index + 1}
               </td>
               <td className="px-4 py-2 text-[14px] text-[#767676] ">
                 {student.name}
@@ -52,7 +54,7 @@ const StudentTable = ({ studentList = [] }: StudentTableProps) => {
                 {student.phone}
               </td>
               <td className="px-4 py-2 text-[14px] text-[#767676] ">
-                {student.active==="active"    ? "Yes" : "No"}
+                {student.active === "active" ? "Yes" : "No"}
               </td>
             </tr>
           ))}

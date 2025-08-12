@@ -1,4 +1,8 @@
 "use client";
+//
+// Pagination component for displaying and navigating through pages of student data
+// This component handles the display of page numbers, previous/next buttons, and the current page information.
+//
 const Pagination = ({
   first,
   prev,
@@ -17,8 +21,9 @@ const Pagination = ({
       onPageChange(clampedPage);
     }
   };
-
-  
+  // Generate page numbers for pagination
+  // Show 4 pages around the current page, ensuring we don't go below 1 or above total pages
+  //
   const getPageNumbers = () => {
     const start = Math.max(1, currentPage - 2);
     const end = Math.min(totalPages, start + 3);

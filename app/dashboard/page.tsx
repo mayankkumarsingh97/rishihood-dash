@@ -1,46 +1,26 @@
 "use client";
-import { useState, useEffect } from "react";
 import StudentTable from "@/component/StudentTable";
 import Pagination from "@/shared/pagination/Pagination";
 import Header from "@/component/header/Header";
-import { fetchStudents } from "@/services/student.service";
-
+import useStudent from "@/hooks/useStudent";
+// This is the main dashboard page for the application
+// It includes a sidebar, header, and main content area
 export default function DashboardPage() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [students, setStudents] = useState<any>([]);
-  const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState<any>();
-  // Filters
-  const [department, setDepartment] = useState("");
-  const [active, setActive] = useState("active");
-  const limit = 10;
-  //
-  // Function to fetch students based on filters and pagination
-  const getStudents = async () => {
-    setLoading(true);
-    try {
-      const data = await fetchStudents({
-        page,
-        limit,
-        department: department || "",
-        active: active,
-      });
+  const {
+    loading,
+    error,
+    students,
+    pagination,
+    page,
+    setPage,
+    department,
+    setDepartment,
+    active,
+    setActive,
+    limit,
+  } = useStudent();
 
-      setStudents(data.data.data);
-      setPagination(data.data);
-    } catch (err) {
-      console.error("Failed to fetch students:", err);
-      setError("Failed to fetch data");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getStudents();
-  }, [page, department, active]);
-
+  // It also handles department and status changes through the Header component
   return (
     <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] h-screen">
       {/* Sidebar */}

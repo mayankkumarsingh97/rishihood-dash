@@ -18,7 +18,7 @@ const Pagination = ({
     }
   };
 
-  // Show only 4 page buttons (like your current UI)
+  
   const getPageNumbers = () => {
     const start = Math.max(1, currentPage - 2);
     const end = Math.min(totalPages, start + 3);

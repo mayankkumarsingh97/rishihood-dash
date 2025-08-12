@@ -1,22 +1,55 @@
 "use client";
-import useHttp from "@/hooks/useHttp";
-import { getStudentList } from "@/services/student.service";
+import { useState, useEffect } from "react";
 import TableShimmer from "@/shared/shimmer/TableShimmer";
 import StudentTable from "@/component/StudentTable";
 import Pagination from "@/shared/pagination/Pagination";
 import Header from "@/component/header/Header";
+import { fetchStudents } from "@/services/student.service";
 
-//
 export default function DashboardPage() {
-  const { loading, data: studentList, error } = useHttp(getStudentList);
-  //
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [students, setStudents] = useState<any>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [all, setAll] = useState("true");
+
+  // Filters
+  const [department, setDepartment] = useState("");
+  const [active, setActive] = useState("active");
+
+  const limit = 100;
+  const getStudents = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchStudents({
+        page,
+        limit,
+        department: department || "",
+        active: active,
+        all: "true", // Assuming you want to fetch all students regardless of department or status
+      });
+
+      setStudents(data.data.data);
+      setTotalPages(Math.ceil(data.total / limit));
+    } catch (err) {
+      console.error("Failed to fetch students:", err);
+      setError("Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStudents();
+  }, [page, department, active]);
+
   return (
-    <div className="grid md:grid-cols-[250px_1fr] h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] h-screen">
       {/* Sidebar */}
-      <aside className="bg-[#adceff] text-white p-6 hidden md:block">
+      <aside className="bg-[#bae6fd] text-white p-6 hidden md:block">
         <div>
-          <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
-        
+          <h2 className="text-2xl font-bold mb-4 text-black">Dashboard</h2>
         </div>
         <ul className="space-y-2">
           <li className="hover:text-black-600 cursor-pointer text-black">
@@ -29,33 +62,31 @@ export default function DashboardPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="bg-[#a4bbdd] p-10">
-        <h1 className="text-3xl font-semibold mb-6">
-          Welcome to the University Portal
-        </h1>
+      <main className="bg-[#c8ecff] p-2 md:p-10">
+        <h1 className="text-3xl font-semibold mb-6">Welcome, Mayank</h1>
+
         <Header
-          onSearch={(value) => console.log("Search:", value)}
-          onDepartmentChange={(value) => console.log("Department:", value)}
-          onStatusChange={(value) => console.log("Status:", value)}
+          onDepartmentChange={(value) => setDepartment(value)}
+          onStatusChange={(value) => setActive(value)}
         />
+
         {/* Student Data Table */}
-        <div className="bg-white rounded shadow p-6 mb-8   md:min-h-[600px]  md:max-h-[600px] overflow-y-scroll">
+        <div className="bg-white rounded shadow p-6 mb-2 md:min-h-[600px] max-h-[600px] overflow-y-scroll">
           {loading ? (
             <TableShimmer />
           ) : error ? (
-            <p>Error:</p>
+            <p className="text-red-500">{error}</p>
           ) : (
-            <StudentTable studentList={studentList} />
+            <StudentTable studentList={students} />
           )}
         </div>
 
-        <div className="bg-white rounded shadow p-2 justify-center items-center">
-          {/* Pagination Component */}
-          {studentList && (
+        <div className="bg-white rounded shadow p-2">
+          {students && (
             <Pagination
-              data={studentList}
+              data={students}
               onPageChange={() => {}}
-              itemsPerPage={10}
+              itemsPerPage={limit}
             />
           )}
         </div>

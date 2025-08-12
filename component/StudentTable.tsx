@@ -4,7 +4,7 @@ interface Student {
   id: number;
   name: string;
   department: string;
-  active: boolean;
+  active: string;
   phone: string;
   email: string;
   number: string;
@@ -21,20 +21,12 @@ const StudentTable = ({ studentList = [] }: StudentTableProps) => {
       <table className="min-w-full bg-white shadow rounded-lg">
         <thead className="bg-gray-100 text-left w-full sticky top-0">
           <tr>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">S.No</th>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">Name</th>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">
-              Department
-            </th>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">
-              Email
-            </th>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">
-              Number
-            </th>
-            <th className="px-4 py-2 border-b text-[14px] font-roboto">
-              Active
-            </th>
+            <th className="px-4 py-2 border-b">S.No</th>
+            <th className="px-4 py-2 border-b">Name</th>
+            <th className="px-4 py-2 border-b">Department</th>
+            <th className="px-4 py-2 border-b">Email</th>
+            <th className="px-4 py-2 border-b">Number</th>
+            <th className="px-4 py-2 border-b">Active</th>
           </tr>
         </thead>
         <tbody>
@@ -43,23 +35,24 @@ const StudentTable = ({ studentList = [] }: StudentTableProps) => {
               key={student.id}
               className="odd:bg-gray-50 even:bg-white hover:bg-gray-100 transition-colors"
             >
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
                 {index + 1}
               </td>
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
                 {student.name}
               </td>
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
-                {student.email}
-              </td>
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
                 {student.department}
               </td>
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
+                {student.email}
+              </td>
+
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
                 {student.phone}
               </td>
-              <td className="px-4 py-2 text-[14px] text-[#767676] font-roboto">
-                {student.active ? "Yes" : "No"}
+              <td className="px-4 py-2 text-[14px] text-[#767676] ">
+                {student.active==="active"    ? "Yes" : "No"}
               </td>
             </tr>
           ))}

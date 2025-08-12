@@ -3191,6 +3191,16 @@
       "email": "rohan399@university.edu",
       "active": "Inactive",
       "phone": "+91-6216145682"
+    },
+    {
+      "id": 400,
+      "username": "admin",
+       "department": "Chemistry",
+      "password": "123456",
+      "name": "Mayank Singh",
+      "email": "mayank@example.com",
+      "role": "admin",
+      "phone": "+91-6216145682"
     }
   ]
 }

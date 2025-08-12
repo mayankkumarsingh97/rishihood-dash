@@ -1,5 +1,8 @@
 import { memo } from "react";
-
+//@
+// This file contains the StudentTable component
+// It displays a table of students with pagination and sorting features
+//@
 interface Student {
   id: number;
   name: string;
@@ -16,7 +19,10 @@ interface StudentTableProps {
   page: number;
   limit: number;
 }
-
+//@
+// StudentTable component to display a list of students in a table format
+// It accepts studentList, page, and limit as props
+//@
 const StudentTable = ({ page, limit, studentList = [] }: StudentTableProps) => {
   return (
     <div className="overflow-x-auto font-roboto">

@@ -1,5 +1,9 @@
 "use client";
 import React from "react";
+//@
+// This file contains the Header component
+// It provides dropdowns for filtering students by department and status
+//@
 
 const Header = ({
   onDepartmentChange,

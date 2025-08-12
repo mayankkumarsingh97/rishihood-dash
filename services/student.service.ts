@@ -1,7 +1,7 @@
-//
+//@
 // This file contains the service for fetching student data from the API
 // It includes the function to fetch students with optional filters for department and active status
-//
+//@
 interface FetchStudentsParams {
   page: number;
   limit: number;
@@ -22,9 +22,10 @@ export const fetchStudents = async ({
 }: FetchStudentsParams) => {
   try {
     let query = `_page=${page}`;
+    if (department === 'All') query += `_page=1`;
     if (department) query += `&department=${department}`;
     if (active) query += `&active=${active}`;
-    if (all) query += `_page=1`;
+    // if (department === "All") query += `_page=1`;
 
     const res = await fetch(`http://localhost:4000/students?${query}`);
 

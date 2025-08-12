@@ -1,11 +1,16 @@
 "use client";
+import { useRouter } from "next/navigation";
 import StudentTable from "@/component/StudentTable";
 import Pagination from "@/shared/pagination/Pagination";
 import Header from "@/component/header/Header";
 import useStudent from "@/hooks/useStudent";
+import { useAuth } from "@/context/auth/AuthContext";
 // This is the main dashboard page for the application
 // It includes a sidebar, header, and main content area
 export default function DashboardPage() {
+  const router = useRouter();
+  const { state, dispatch } = useAuth();
+  const { firstname } = state?.user?.name ?? {};
   const {
     loading,
     error,
@@ -19,6 +24,14 @@ export default function DashboardPage() {
     setActive,
     limit,
   } = useStudent();
+
+  const handleLogout = () => {
+    dispatch({
+      type: "LOGOUT",
+      user: null,
+    });
+    router.push("/");
+  };
 
   // It also handles department and status changes through the Header component
   return (
@@ -40,7 +53,16 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <main className="bg-[#c8ecff] p-2 md:p-10">
-        <h1 className="text-3xl font-semibold mb-6">Welcome, Mayank Kumar</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-semibold mb-6">Welcome, {firstname}</h1>
+
+          <button
+            onClick={handleLogout}
+            className="bg-blue-400 px-2 py-1 rounded custom-button text-white hover:bg-blue-500 transition duration-300"
+          >
+            Logout
+          </button>
+        </div>
 
         <Header
           onDepartmentChange={(value) => setDepartment(value)}
@@ -48,7 +70,7 @@ export default function DashboardPage() {
         />
 
         {/* Student Data Table */}
-        <div className="bg-white rounded shadow p-6 mb-2 md:min-h-[500px] max-h-[500px]">
+        <div className="bg-white rounded shadow p-6 mb-2 md:min-h-[500px] max-h-full max-h-[500px]">
           {loading ? null : error ? (
             <p className="text-red-500">{error}</p>
           ) : (

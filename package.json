@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "json-server": "json-server --watch  student.db.json --port 4000",
-    "export": "next export",
-    "deploy": "npm run build && npm run export && gh-pages -d out"
+    "deploy": "next build && gh-pages -d out"
   },
   "dependencies": {
     "next": "15.4.6",

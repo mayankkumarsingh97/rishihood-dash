@@ -1,7 +1,11 @@
 "use client";
 import React, { createContext, useReducer, useContext, useEffect } from "react";
 import { authReducer } from "../reducers/authReducer";
-
+//@
+// This context will provide authentication state and dispatch function to the entire app
+// It will be used to manage user authentication status and user data across the application
+// This context will be used in the AuthProvider component to wrap the application
+//@
 const AuthContext = createContext();
 
 const getInitialState = () => {

@@ -8,6 +8,11 @@ import { useAuth } from "@/context/auth/AuthContext";
 // This is the main dashboard page for the application
 // It includes a sidebar, header, and main content area
 export default function DashboardPage() {
+  //@
+  // and the useAuth hook to access authentication state
+  // and user information
+  // The useStudent hook is used to manage student data and pagination
+  //@
   const router = useRouter();
   const { state, dispatch } = useAuth();
   const { firstname } = state?.user?.name ?? {};
@@ -42,10 +47,10 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold mb-4 text-black">Dashboard</h2>
         </div>
         <ul className="space-y-2">
-          <li className="hover:text-black-600 cursor-pointer text-black">
+          <li className="hover:text-black-600 cursor-pointer text-black bg-[#99d8fa] px-4 py-2 rounded">
             Students
           </li>
-          <li className="hover:text-black-600 cursor-pointer text-black">
+          <li className="hover:text-black-600 cursor-pointer text-black px-4 py-2 rounded">
             Add student
           </li>
         </ul>
@@ -54,14 +59,24 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="bg-[#c8ecff] p-2 md:p-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold mb-6">Welcome, {firstname}</h1>
+          <h1 className=" text-[16px]  md:text-3xl  font-semibold py-4">
+            Welcome, <span className="uppercase">{firstname}</span>
+          </h1>
 
-          <button
-            onClick={handleLogout}
-            className="bg-blue-400 px-2 py-1 rounded custom-button text-white hover:bg-blue-500 transition duration-300"
-          >
-            Logout
-          </button>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={handleLogout}
+              className="bg-blue-400 px-2 py-1  custom-button text-white hover:bg-blue-500 transition duration-300 cursor-pointer"
+            >
+              Logout
+            </button>
+            <button
+              onClick={() => {}}
+              className="bg-[#6ec6f5] px-2 py-1  custom-button text-white hover:bg-blue-400 transition duration-300 cursor-pointer block md:hidden"
+            >
+              Add Student
+            </button>
+          </div>
         </div>
 
         <Header

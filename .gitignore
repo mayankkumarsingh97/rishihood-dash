@@ -12,7 +12,7 @@
 
 # testing
 /coverage
-
+/json-server/node_modules
 # next.js
 /.next/
 

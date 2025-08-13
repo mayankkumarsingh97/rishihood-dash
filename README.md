@@ -24,14 +24,13 @@ Rishiwood Dash is a modern, responsive dashboard application built with React.js
 
 
 ## 🛠️ Tech Stack
-- **Frontend:** React.js, Tailwind CSS, React Router DOM
+- **Frontend:** Nextjs, Tailwind CSS, File based Routing
 - **State Management:** Context API
 - **Backend (optional):** JSON Server / API integration
 
 
----
 
-## 📂 Folder Structure
+
 
 
 

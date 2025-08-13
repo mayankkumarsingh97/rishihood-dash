@@ -1,13 +1,10 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-
-};
-const isProd = process.env.NODE_ENV === 'production';
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: 'export',
-  images: { unoptimized: true },
-  basePath: isProd ? '/rishihood-dash' : '',
-  assetPrefix: isProd ? '/rishihood-dash/' : '',
+  basePath:  process.env.NODE_ENV === 'production' ? '/rishihood-dash' : '',
+  images: {
+    unoptimized: true, // This is required for static export with images
+  },
 };
-export default nextConfig;
+
+module.exports = nextConfig;

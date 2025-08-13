@@ -1,3 +1,4 @@
+import API_URL from "@/config"
 //@
 // This file contains the service for fetching student data from the API
 // It includes the function to fetch students with optional filters for department and active status
@@ -27,7 +28,7 @@ export const fetchStudents = async ({
     if (active) query += `&active=${active}`;
     // if (department === "All") query += `_page=1`;
 
-    const res = await fetch(`http://localhost:4000/students?${query}`);
+    const res = await fetch(`https://json-server-itxt.onrender.com/students?${query}`);
 
     if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
 

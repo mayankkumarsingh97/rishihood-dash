@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "json-server": "json-server --watch  student.db.json --port 4000",
-    "deploy": "next build && gh-pages -d out"
+    "deploy": "next build &&  echo > out/.nojekyll && gh-pages -d out"
   },
   "dependencies": {
     "next": "15.4.6",

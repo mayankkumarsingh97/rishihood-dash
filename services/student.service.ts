@@ -26,7 +26,7 @@ export const fetchStudents = async ({
     if (department === 'All') query += `_page=1`;
     if (department) query += `&department=${department}`;
     if (active) query += `&active=${active}`;
-    // if (department === "All") query += `_page=1`;
+    if (department === "All") query += `_page=1`;
 
     const res = await fetch(`https://json-server-itxt.onrender.com/students?${query}`);
 

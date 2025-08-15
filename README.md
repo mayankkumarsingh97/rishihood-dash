@@ -1,7 +1,7 @@
 
 # Rishiwood Dash
 
-Rishiwood Dash is a modern, responsive dashboard application built with React.js and Tailwind CSS.  
+Rishiwood Dash is a modern, responsive dashboard application built with Next.js and Tailwind CSS.  
 
 - **Frontend:** [https://mayankkumarsingh97.github.io/rishihood-dash/]
 ##

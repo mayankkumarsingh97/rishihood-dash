@@ -1,22 +1,49 @@
 import { useState, useEffect } from "react";
 import { fetchStudents } from "@/services/student.service";
 
-const useStudent = () => {
-  // Custom hook to manage student data fetching and state
-  // State variables
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [students, setStudents] = useState<any>([]);
-  const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState<any>();
-  const [department, setDepartment] = useState("");
-  const [active, setActive] = useState("active");
+// Define types for student and pagination
+export interface Student {
+  id: string;
+  name: string;
+  department: string;
+  active: boolean;
+  // Add other student fields as needed
+}
+
+export interface Pagination {
+  total: number;
+  page: number;
+  limit: number;
+  // Add other pagination fields as needed
+  data: Student[];
+}
+
+export interface UseStudentReturn {
+  loading: boolean;
+  error: string;
+  students: Student[];
+  pagination?: Pagination;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  department: string;
+  setDepartment: React.Dispatch<React.SetStateAction<string>>;
+  active: string;
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+  getStudents: () => Promise<void>;
+  limit: number;
+}
+
+const useStudent = (): UseStudentReturn => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [students, setStudents] = useState<Student[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [pagination, setPagination] = useState<Pagination>();
+  const [department, setDepartment] = useState<string>("");
+  const [active, setActive] = useState<string>("active");
   const limit = 10;
-  //@
-  // Function to fetch students based on filters and pagination
-  // This function is called whenever the page, department, or active status changes
-  //@
-  const getStudents = async () => {
+
+  const getStudents = async (): Promise<void> => {
     setLoading(true);
     try {
       const data = await fetchStudents({
@@ -26,8 +53,8 @@ const useStudent = () => {
         active: active,
       });
 
-      setStudents(data.data.data);
-      setPagination(data.data);
+      setStudents(data.data.data as Student[]);
+      setPagination(data.data as Pagination);
     } catch (err) {
       console.error("Failed to fetch students:", err);
       setError("Failed to fetch data");
@@ -38,6 +65,7 @@ const useStudent = () => {
 
   useEffect(() => {
     getStudents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, department, active]);
 
   return {

@@ -30,7 +30,9 @@ export default function LoginPage() {
                 throw new Error("Invalid email or password");
             }
             const data = await getUserProfile();
+            //
             dispatch({ type: "LOGIN", payload: data });
+            //
             router.push("/dashboard");
         } catch (err: any) {
             alert(err.message || "An error occurred during login");
